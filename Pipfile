@@ -4,10 +4,15 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+pylint = "*"
 
 [packages]
 pymongo = "*"
 pandas = "*"
+keras = "*"
+tensorflow = "*"
+nltk = "*"
+sklearn = "*"
 
 [requires]
 python_version = "3.7"

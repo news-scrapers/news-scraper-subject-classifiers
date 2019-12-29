@@ -20,17 +20,23 @@ def createjson(item):
 
 def save_news_into_jsons(news):
   for item in news:
-    item = createjson(item)
+    #item = createjson(item)
+    #print(item)
     filename = pathout + item["id"] + "--" + item["newspaper"] + ".json"
     
-    with open(filename, 'w') as outfile:
-      json.dump(item, outfile)
+    with open(filename, 'w',encoding="utf-8") as outfile:
+      json.dump(item, outfile, ensure_ascii=False)
 
 
 def save_news_into_json_bundle(news):
   filename = pathoutbundle + "bundle.json"
-  with open(filename, 'w') as outfile:
-    json.dump(news, outfile, encoding='utf-8')
+  out = []
+  for item in news:
+    item = createjson(item)
+    out = out + [item]
+    
+  with open(filename, 'w',encoding="utf-8") as outfile:
+    json.dump(out, outfile, ensure_ascii=False)
 
 def main():
     client = MongoClient(port=27017)
@@ -44,8 +50,12 @@ def main():
 
     count = db["NewsContentScraped"].find(query)
 
-    save_news_into_jsons( count)
-    #save_news_into_json_bundle(dumps(count))
+    #save_news_into_jsons( count)
+    save_news_into_json_bundle(count)
 
 if __name__ == "__main__":
     main()
+
+
+
+#tar -cJf bundle.tar.xz bundle.json
