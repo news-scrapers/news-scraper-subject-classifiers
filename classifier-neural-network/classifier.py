@@ -9,6 +9,7 @@ from keras.preprocessing.text import Tokenizer
 from keras.models import Sequential
 from keras import layers
 from sklearn.model_selection import train_test_split
+from keras.preprocessing.sequence import pad_sequences
 
 nltk.download('stopwords')
 import pandas as pd
@@ -74,6 +75,9 @@ def main():
 
     X_train = tokenizer.texts_to_sequences(sentences_train)
     X_test = tokenizer.texts_to_sequences(sentences_test)
+
+    X_train = pad_sequences(X_train, padding='post', maxlen=maxlen)
+    X_test = pad_sequences(X_test, padding='post', maxlen=maxlen)
 
     vocab_size = len(tokenizer.word_index) + 1  # Adding 1 because of reserved 0 index
 
