@@ -6,10 +6,10 @@ import numpy as np
 
 maxlen = 100
 def obtain_classes(proba, multilabel_binarizer):
-    idxs = np.argsort(proba)[::-1][:2]
+    idxs = np.argsort(proba)[::-1][:10]
     # loop over the indexes of the high confidence class labels
     for (i, j) in enumerate(idxs):
-        if (proba[j] * 100 > 0.001):
+        if (proba[j] * 100 > 10):
             # build the label and draw the label on the image
             label = "{}: {:.2f}%".format(multilabel_binarizer.classes_[j], proba[j] * 100)
             print(label)
