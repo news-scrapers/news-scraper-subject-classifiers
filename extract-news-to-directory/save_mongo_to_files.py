@@ -29,7 +29,7 @@ def save_news_into_jsons(news):
 
 
 def save_news_into_json_bundle(news):
-  filename = pathoutbundle + "bundle.json"
+  filename = pathoutbundle + "large-bundle.json"
   out = []
   for item in news:
     item = createjson(item)
@@ -42,10 +42,12 @@ def main():
     client = MongoClient(port=27017)
     db = client["news-scraped-with-tags"]
 
-    query = {"date": {
-        "$gte":   datetime.datetime.strptime("2018-11-01", '%Y-%m-%d'),
-        "$lt":     datetime.datetime.strptime("2019-12-31", '%Y-%m-%d')}
-    }
+    #query = {"date": {
+    #    "$gte":   datetime.datetime.strptime("2018-11-01", '%Y-%m-%d'),
+    #    "$lt":     datetime.datetime.strptime("2019-12-31", '%Y-%m-%d')}
+    #}
+
+    query = {"tags":{"$ne" : None}}
     print(query)
 
     count = db["NewsContentScraped"].find(query)
