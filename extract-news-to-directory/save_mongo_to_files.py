@@ -5,9 +5,12 @@ import json
 from bson import json_util
 from bson.json_util import dumps
 from bson.json_util import dumps, CANONICAL_JSON_OPTIONS
+from dotenv import load_dotenv
+import os
 
 pathout = "../data/json_news_tagged/"
 pathoutbundle = "../data/json_news_tagged_bundle/"
+load_dotenv(verbose=True)
 
 def createjson(item):
   out = dict()
@@ -39,7 +42,9 @@ def save_news_into_json_bundle(news):
     json.dump(out, outfile, ensure_ascii=False)
 
 def main():
-    client = MongoClient(port=27017)
+    MONGO_URL = os.getenv("database_url")
+
+    client = MongoClient(MONGO_URL)
     db = client["news-scraped-with-tags"]
 
     #query = {"date": {
@@ -51,7 +56,9 @@ def main():
     print(query)
 
     count = db["NewsContentScraped"].find(query)
+    count2 = db["NewsContentScraped"].find(query).count()
 
+    print(count2)
     #save_news_into_jsons( count)
     save_news_into_json_bundle(count)
 
