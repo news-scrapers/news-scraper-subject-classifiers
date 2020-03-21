@@ -16,3 +16,5 @@
 bundle.json
 *bundle.json
 .env
+model.h5
+temp-model.h5
