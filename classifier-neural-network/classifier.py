@@ -7,14 +7,14 @@ from nltk.corpus import stopwords
 from sklearn.preprocessing import MultiLabelBinarizer
 from keras.preprocessing.text import Tokenizer
 from keras.models import Sequential
-from keras.layers import Dense, Activation, Embedding, Flatten, GlobalMaxPool1D, Dropout, Conv1D
+from keras.layers import Dense, Activation, Input, Embedding, Flatten, GlobalMaxPool1D, Dropout, Conv1D
 from keras.callbacks import ReduceLROnPlateau, EarlyStopping, ModelCheckpoint
 
 from keras.optimizers import Adam
 from sklearn.model_selection import train_test_split
 from keras.preprocessing.sequence import pad_sequences
 
-nltk.download('stopwords')
+#nltk.download('stopwords')
 import pandas as pd
 import glob
 import re
@@ -97,25 +97,36 @@ class Classifier:
         #model.add(GlobalMaxPool1D())
         #model.add(Dense(output_size, activation='sigmoid'))
 
+        #self.model = Sequential()
+        #self.model.add(Embedding(vocab_size, 20, input_length=self.maxlen))
+        #self.model.add(Dropout(0.1))
+        #self.model.add(Conv1D(filter_length, 3, padding='valid', activation='relu', strides=1))
+        #self.model.add(GlobalMaxPool1D())
+        #self.model.add(Dense(output_size))
+        #self.model.add(Activation('sigmoid'))
+
         self.model = Sequential()
         self.model.add(Embedding(vocab_size, 20, input_length=self.maxlen))
-        self.model.add(Dropout(0.1))
-        self.model.add(Conv1D(filter_length, 3, padding='valid', activation='relu', strides=1))
-        self.model.add(GlobalMaxPool1D())
-        self.model.add(Dense(output_size))
-        self.model.add(Activation('sigmoid'))
+        self.model.add(Dense(200, activation="relu"))
+        self.model.add(Dense(100, activation="relu"))
+        self.model.add(Flatten())
+        self.model.add(Dense(output_size, activation="relu"))
+        self.model.add(Activation('softmax'))
+        # create model
+
+        self.model.compile(optimizer="adam", loss='binary_crossentropy', metrics=['accuracy'])
 
 
-        self.model.compile(optimizer=Adam(0.015), loss='binary_crossentropy', metrics=['categorical_accuracy'])
-        
-    def save_model(self, model):
+    def save_model_structure(self):
         print("saving model")
         # serialize model to JSON
-        model_json = model.to_json()
+        model_json = self.model.to_json()
         with open("../data/neural_network_config/model.json", "w") as json_file:
             json_file.write(model_json)
+
+    def save_weights(self):
         # serialize weights to HDF5
-        model.save_weights("../data/neural_network_config/model.h5")
+        self.model.save_weights("../data/neural_network_config/model.h5")
         print("Saved model to disk")
 
     def create_and_train_model(self):
@@ -135,15 +146,16 @@ class Classifier:
         output_size = len(y[0])
 
         self.create_model(vocab_size, output_size)
-        
+        self.save_model_structure()
+
         callbacks = [
         ReduceLROnPlateau(),
         EarlyStopping(patience=4),
         ModelCheckpoint(filepath='../data/neural_network_config/temp-model.h5', save_best_only=True)]
 
         history = self.model.fit(X_train, y_train,
-                            epochs=20,
-                            batch_size=32,
+                            epochs=5,
+                            batch_size=10,
                             validation_data=(X_test, y_test),
                             callbacks=callbacks)
 
@@ -154,7 +166,7 @@ class Classifier:
         print("Testing Accuracy:  {:.4f}".format(accuracy))
 
 
-        self.save_model(self.model)
+        self.save_weights()
 
 
 if __name__== "__main__":
