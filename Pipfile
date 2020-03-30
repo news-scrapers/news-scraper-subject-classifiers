@@ -13,8 +13,7 @@ keras = "*"
 sklearn = "*"
 pandas = "*"
 numpy = "*"
-glob = "*"
-pickle = "*"
+tensorflow = "*"
 
 [requires]
 python_version = "3.7"
