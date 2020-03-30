@@ -19,3 +19,4 @@ large-bundle*
 .env
 model.h5
 temp-model.h5
+*-bundle-after-corona.json
