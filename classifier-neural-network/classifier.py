@@ -14,7 +14,7 @@ from keras.optimizers import Adam
 from sklearn.model_selection import train_test_split
 from keras.preprocessing.sequence import pad_sequences
 
-#nltk.download('stopwords')
+nltk.download('stopwords')
 import pandas as pd
 import glob
 import re
