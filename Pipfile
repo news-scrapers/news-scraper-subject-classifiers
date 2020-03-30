@@ -8,6 +8,13 @@ verify_ssl = true
 [packages]
 pymongo = "*"
 python-dotenv = "*"
+nltk = "*"
+keras = "*"
+sklearn = "*"
+pandas = "*"
+numpy = "*"
+glob = "*"
+pickle = "*"
 
 [requires]
 python_version = "3.7"
