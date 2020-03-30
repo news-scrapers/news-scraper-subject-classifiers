@@ -32,7 +32,7 @@ def save_news_into_jsons(news):
 
 
 def save_news_into_json_bundle(news):
-  filename = pathoutbundle + "large-bundle.json"
+  filename = pathoutbundle + "large-bundle-corona.json"
   out = []
   for item in news:
     item = createjson(item)
@@ -44,7 +44,7 @@ def save_news_into_json_bundle(news):
 def main():
     MONGO_URL = os.getenv("database_url")
 
-    client = MongoClient(MONGO_URL)
+    client = MongoClient(MONGO_URL, unicode_decode_error_handler='ignore')
     db = client["news-scraped-with-tags"]
 
     #query = {"date": {
