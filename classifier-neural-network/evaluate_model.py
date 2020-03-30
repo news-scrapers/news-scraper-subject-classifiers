@@ -27,7 +27,7 @@ def main():
     loaded_model = model_from_json(loaded_model_json)
 
     # load weights into new model
-    loaded_model.load_weights("../data/neural_network_config/temp-model.h5")
+    loaded_model.load_weights("../data/neural_network_config/model_new.h5")
     print("Loaded model from disk")
 
     # load categories
