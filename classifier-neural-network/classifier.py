@@ -126,7 +126,7 @@ class Classifier:
 
     def save_weights(self):
         # serialize weights to HDF5
-        self.model.save_weights("../data/neural_network_config/model.h5")
+        self.model.save_weights("../data/neural_network_config/model_new.h5")
         print("Saved model to disk")
 
     def create_and_train_model(self):
@@ -151,7 +151,7 @@ class Classifier:
         callbacks = [
         ReduceLROnPlateau(),
         EarlyStopping(patience=4),
-        ModelCheckpoint(filepath='../data/neural_network_config/temp-model.h5', save_best_only=True)]
+        ModelCheckpoint(filepath='../data/neural_network_config/temp-model-new.h5', save_best_only=True)]
 
         history = self.model.fit(X_train, y_train,
                             epochs=5,
