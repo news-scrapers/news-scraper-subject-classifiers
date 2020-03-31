@@ -107,8 +107,8 @@ class Classifier:
 
         self.model = Sequential()
         self.model.add(Embedding(vocab_size, 20, input_length=self.maxlen))
-        self.model.add(Dense(10, activation="relu"))
-        self.model.add(Dense(10, activation="relu"))
+        self.model.add(Dense(40, activation="relu"))
+        self.model.add(Dense(40, activation="relu"))
         self.model.add(Flatten())
         self.model.add(Dense(output_size, activation="relu"))
         self.model.add(Activation('softmax'))
@@ -154,8 +154,8 @@ class Classifier:
         ModelCheckpoint(filepath='../data/neural_network_config/temp-model-new.h5', save_best_only=True)]
 
         history = self.model.fit(X_train, y_train,
-                            epochs=20,
-                            batch_size=10,
+                            epochs=40,
+                            batch_size=40,
                             validation_data=(X_test, y_test),
                             callbacks=callbacks)
 
