@@ -52,7 +52,9 @@ def main():
     #    "$lt":     datetime.datetime.strptime("2019-12-31", '%Y-%m-%d')}
     #}
 
-    query = {"tags":{"$ne" : None}}
+    query = {"tags":{"$ne" : None}, "date": {
+        "$gte":   datetime.datetime.strptime("2020-02-01", '%Y-%m-%d'),
+       "$lt":     datetime.datetime.strptime("2021-11-01", '%Y-%m-%d')}}
     print(query)
 
     count = db["NewsContentScraped"].find(query)
