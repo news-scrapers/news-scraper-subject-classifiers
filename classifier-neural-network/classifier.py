@@ -31,7 +31,7 @@ class Classifier:
         self.tokenizer = None
         self.multilabel_binarizer = MultiLabelBinarizer()
         self.model = None
-        self.maxlen = 20
+        self.maxlen = 100
 
 
     def clean_text(self, text):
@@ -107,8 +107,8 @@ class Classifier:
 
         self.model = Sequential()
         self.model.add(Embedding(vocab_size, 20, input_length=self.maxlen))
-        self.model.add(Dense(10, activation="relu"))
-        self.model.add(Dense(10, activation="relu"))
+        self.model.add(Dense(40, activation="relu"))
+        self.model.add(Dense(40, activation="relu"))
         self.model.add(Flatten())
         self.model.add(Dense(output_size, activation="relu"))
         self.model.add(Activation('softmax'))
