@@ -53,7 +53,7 @@ def main():
     #}
 
     query = {"tags":{"$ne" : None}, "date": {
-        "$gte":   datetime.datetime.strptime("2019-05-01", '%Y-%m-%d'),
+        "$gte":   datetime.datetime.strptime("2017-05-01", '%Y-%m-%d'),
        "$lt":     datetime.datetime.strptime("2021-11-01", '%Y-%m-%d')}}
     print(query)
 
