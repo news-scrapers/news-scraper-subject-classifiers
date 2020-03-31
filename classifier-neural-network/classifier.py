@@ -154,7 +154,7 @@ class Classifier:
         ModelCheckpoint(filepath='../data/neural_network_config/temp-model-new.h5', save_best_only=True)]
 
         history = self.model.fit(X_train, y_train,
-                            epochs=5,
+                            epochs=20,
                             batch_size=10,
                             validation_data=(X_test, y_test),
                             callbacks=callbacks)
