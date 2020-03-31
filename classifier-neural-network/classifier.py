@@ -31,7 +31,7 @@ class Classifier:
         self.tokenizer = None
         self.multilabel_binarizer = MultiLabelBinarizer()
         self.model = None
-        self.maxlen = 20
+        self.maxlen = 100
 
 
     def clean_text(self, text):
