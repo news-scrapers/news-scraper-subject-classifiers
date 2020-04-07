@@ -1,9 +1,6 @@
 #tar -cJf filename.tar.xz /path/to/folder_or_file ...
 #https://blog.mimacom.com/text-classification/
 
-from keras.datasets import imdb
-import nltk
-from nltk.corpus import stopwords
 from sklearn.preprocessing import MultiLabelBinarizer
 from keras.preprocessing.text import Tokenizer
 from keras.models import Sequential
@@ -14,7 +11,6 @@ from keras.optimizers import Adam
 from sklearn.model_selection import train_test_split
 from keras.preprocessing.sequence import pad_sequences
 
-nltk.download('stopwords')
 import pandas as pd
 import glob
 import re
@@ -25,38 +21,13 @@ import pickle
 
 class Classifier:
     def __init__(self):
-        self.REPLACE_BY_SPACE_RE = re.compile('[/(){}\[\]\|@,;]')
-        self.BAD_SYMBOLS_RE = re.compile('[^\w\s]')
-        self.STOPWORDS = set(stopwords.words('spanish'))
-        self.tokenizer = None
+        print("loading toikenizer")
+        with open('../data/neural_network_config/tokenizer.pickle', 'rb') as handle:
+            self.tokenizer = pickle.load(handle)
         self.multilabel_binarizer = MultiLabelBinarizer()
         self.model = None
         self.maxlen = 100
 
-
-    def clean_text(self, text):
-        text = text.lower() # lowercase text
-        text = self.REPLACE_BY_SPACE_RE.sub(' ', text) # replace REPLACE_BY_SPACE_RE symbols by space in text. substitute the matched string in REPLACE_BY_SPACE_RE with space.
-        text = self.BAD_SYMBOLS_RE.sub('', text) # remove symbols which are in BAD_SYMBOLS_RE from text. substitute the matched string in BAD_SYMBOLS_RE with nothing. 
-    #    text = re.sub(r'\W+', '', text)
-        text = ' '.join(word for word in text.split() if word not in self.STOPWORDS) # remove stopwors from text
-        return text
-
-    def clean_text_in_tags(self, tags):
-        clean_tags = []
-        for tag in tags:
-            clean_tags = clean_tags + [self.clean_text(tag)]
-        return clean_tags
-        
-
-    def clean_news(self, df):
-        print("cleaning the text data")
-        df = df.reset_index(drop=True)
-        df.dropna(subset=['tags'], inplace=True)
-        df['tags'] = df['tags'].apply(self.clean_text_in_tags)
-        df['content'] = df['content'].apply(self.clean_text)
-        df['content'] = df['content'].str.replace('\d+', '')
-        return df
 
     def create_tags_and_multilabel_biniarizer(self, df):
         print("creating tags and tag index for classes")
@@ -65,15 +36,7 @@ class Classifier:
         with open('../data/neural_network_config/multilabel_binarizer.pickle', 'wb') as f:
             pickle.dump((self.multilabel_binarizer), f, protocol=pickle.HIGHEST_PROTOCOL)
         return y
-        
-    def load_tokenizer(self, sentences):
-        print("loading toikenizer")
-        self.tokenizer = Tokenizer(num_words=5000)
-        self.tokenizer.fit_on_texts(sentences)
-
-        # saving tokenizer
-        with open('../data/neural_network_config/tokenizer.pickle', 'wb') as handle:
-            pickle.dump(self.tokenizer, handle, protocol=pickle.HIGHEST_PROTOCOL)
+                
 
     def create_train_and_test_data(self, sentences, y):
         print("separating data into test data and train data")
@@ -130,15 +93,11 @@ class Classifier:
         print("Saved model to disk")
 
     def create_and_train_model(self):
-        filename = "../data/json_news_tagged_bundle/large-bundle-corona.json"
+        filename = "../data/json_news_tagged_bundle/clean_data.json"
         df = pd.read_json(filename)
-        df = self.clean_news(df)
 
         y = self.create_tags_and_multilabel_biniarizer(df)
         sentences = df['content'].values
-
-
-        self.load_tokenizer(sentences)
 
         X_train, X_test, y_train, y_test = self.create_train_and_test_data(sentences, y)
 
@@ -167,7 +126,6 @@ class Classifier:
 
 
         self.save_weights()
-
 
 if __name__== "__main__":
     classifier = Classifier()
