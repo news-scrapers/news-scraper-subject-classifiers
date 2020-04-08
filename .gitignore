@@ -21,3 +21,4 @@ model.h5
 temp-model.h5
 *-bundle-after-corona.json
 node_modules
+clean_data.json

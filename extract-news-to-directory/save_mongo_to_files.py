@@ -69,4 +69,4 @@ if __name__ == "__main__":
 
 
 
-#tar -cJf bundle.tar.xz bundle.json
+#tar -cJf tagged-news-2013-2019.tar.xz large-bundle-corona.json
