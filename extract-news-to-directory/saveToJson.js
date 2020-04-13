@@ -14,8 +14,8 @@ MongoClient.connect(url, function (err, db) {
     "date": {
       "$gte": new Date("2013-05-01"),
       "$lt": new Date("2021-05-01")
-    },
-   'tags.4': { "$exists": true } }
+    }
+  }
 
 
 
