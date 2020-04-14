@@ -54,6 +54,7 @@ class TagProcessor:
                     common_tags_in_row.append(tag)
             if len(common_tags_in_row) == 0:
                 self.df.drop([index])
+                print("removing row")
             else:
                 row.common_tags = common_tags_in_row
                 self.df_clean_tags=self.df_clean_tags.append(row)
