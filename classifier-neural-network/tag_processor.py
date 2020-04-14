@@ -58,7 +58,7 @@ class TagProcessor:
                 row.common_tags = common_tags_in_row
                 self.df_clean_tags=self.df_clean_tags.append(row)
 
-            print("\r",index, self.total)
+            print("\r",index, self.total, self.df_clean_tags[0])
 
 
     def import_df(self):

@@ -93,7 +93,7 @@ class Classifier:
         print("Saved model to disk")
 
     def create_and_train_model(self):
-        filename = "../data/json_news_tagged_bundle/clean_data.json"
+        filename = "../data/json_news_tagged_bundle/clean_data-unified-tags.json"
         df = pd.read_json(filename)
 
         y = self.create_tags_and_multilabel_biniarizer(df)
