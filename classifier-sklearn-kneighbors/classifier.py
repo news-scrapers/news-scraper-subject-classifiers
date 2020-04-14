@@ -113,7 +113,7 @@ class Classifier:
         dump(self.model, '../data/neural_network_config/model-sklearn-kneighbors.joblib') 
     
     def create_and_train_model(self):
-        filename = "../data/json_news_tagged_bundle/large-bundle.json"
+        filename = "../data/json_news_tagged_bundle/clean_data-unified-tags.json"
         df = pd.read_json(filename)
         df = self.clean_news(df)
 

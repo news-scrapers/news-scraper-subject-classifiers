@@ -11,7 +11,7 @@ import pickle
 class TagProcessor:
     def __init__(self):
         self.df = None
-        self.repetitions_threads_hole=15
+        self.repetitions_threads_hole=100
         self.main_tags = []
     
 
@@ -29,7 +29,7 @@ class TagProcessor:
                 else:
                     self.gruped_tags[tag] = 1
             count = count + 1
-            print(count, self.total)
+            print("\r", count, self.total)
         return self.gruped_tags
 
     def depurate_dictionary(self):
@@ -42,17 +42,23 @@ class TagProcessor:
     
     def add_main_tags_to_news(self):
         print("adding main tags to dataframe")
+
         self.df['common_tags'] = np.empty((len(self.df), 0)).tolist()
+        
+        self.df_clean_tags = pd.DataFrame(columns = self.df.columns)
+
         for index, row in self.df.iterrows():
             common_tags_in_row = []
             for tag in row.tags:
                 if tag in self.gruped_tags and self.gruped_tags[tag]>self.repetitions_threads_hole:
                     common_tags_in_row.append(tag)
             if len(common_tags_in_row) == 0:
-                self.df.drop(index)
+                self.df.drop([index])
             else:
                 row.common_tags = common_tags_in_row
-            print(index, self.total)
+                self.df_clean_tags=self.df_clean_tags.append(row)
+
+            print("\r",index, self.total)
 
 
     def import_df(self):
@@ -63,12 +69,13 @@ class TagProcessor:
 
     def saver_results_df(self):
         print("saving new tags")
-        self.df.to_json("../data/json_news_tagged_bundle/clean_data-unified-tags.json")
+        self.df_clean_tags.to_json("../data/json_news_tagged_bundle/clean_data-unified-tags.json")
         
 
 if __name__== "__main__":
     cleaner = TagProcessor()
     cleaner.import_df()
+    print(cleaner.df)
     cleaner.extract_main_tags()
     cleaner.add_main_tags_to_news()
     cleaner.saver_results_df()
