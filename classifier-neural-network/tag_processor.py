@@ -11,7 +11,7 @@ import pickle
 class TagProcessor:
     def __init__(self):
         self.df = None
-        self.repetitions_threads_hole=600
+        self.repetitions_threads_hole=800
         self.main_tags = []
     
 
