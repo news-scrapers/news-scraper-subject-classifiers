@@ -11,7 +11,7 @@ import pickle
 class TagProcessor:
     def __init__(self):
         self.df = None
-        self.repetitions_threads_hole=800
+        self.repetitions_threads_hole=1000
         self.main_tags = []
     
 
@@ -57,6 +57,7 @@ class TagProcessor:
                 print("removing row")
             else:
                 row.common_tags = common_tags_in_row
+                print(common_tags_in_row)
                 self.df_clean_tags=self.df_clean_tags.append(row)
 
             print("\r",index, self.total, self.df_clean_tags.shape[0])
