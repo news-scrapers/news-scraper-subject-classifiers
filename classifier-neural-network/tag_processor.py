@@ -4,6 +4,7 @@
 import pandas as pd
 import re
 import numpy as np
+
 import pickle
 
 
@@ -32,12 +33,17 @@ class TagProcessor:
             print("\r", count, self.total)
         return self.gruped_tags
 
-    def depurate_dictionary(self):
+    def save_main_tags(self):
         self.list_of_common_tags = []
         for tag in self.gruped_tags.keys():
             if (self.gruped_tags[tag]>self.repetitions_threads_hole):
                 self.list_of_common_tags.append(tag)
         print(self.list_of_common_tags)
+        with open('../data/json_news_tagged_bundle/main_tags_list_limit_' + str(self.repetitions_threads_hole) + '.csv', 'w') as f:
+            for item in self.list_of_common_tags:
+                f.write("%s;" % item)
+
+
 
     
     def add_main_tags_to_news(self):
@@ -79,6 +85,7 @@ if __name__== "__main__":
     cleaner.import_df()
     print(cleaner.df)
     cleaner.extract_main_tags()
+    cleaner.save_main_tags()
     cleaner.add_main_tags_to_news()
     cleaner.saver_results_df()
     print(cleaner.df)
