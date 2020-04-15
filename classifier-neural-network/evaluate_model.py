@@ -10,7 +10,7 @@ def obtain_classes(proba, multilabel_binarizer):
     idxs = np.argsort(proba)[::-1][:10]
     # loop over the indexes of the high confidence class labels
     for (i, j) in enumerate(idxs):
-        if (proba[j] * 100 > 1):
+        if (proba[j] * 100 > 0.5):
             # build the label and draw the label on the image
             label = "{}: {:.2f}%".format(multilabel_binarizer.classes_[j], proba[j] * 100)
             print(label)
@@ -51,7 +51,7 @@ def main():
     index = 0
     for proba in ynew:
         print("----")
-        print(sentence_test)
+        print(sentence_test[index])
         obtain_classes(proba, multilabel_binarizer)
         index = index +1
 
