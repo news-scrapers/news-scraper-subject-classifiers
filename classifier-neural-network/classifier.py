@@ -31,7 +31,7 @@ class Classifier:
 
     def create_tags_and_multilabel_biniarizer(self, df):
         print("creating tags and tag index for classes")
-        y = self.multilabel_binarizer.fit_transform(df.tags)
+        y = self.multilabel_binarizer.fit_transform(df.common_tags)
         # Serialize both the pipeline and binarizer to disk.
         with open('../data/neural_network_config/multilabel_binarizer.pickle', 'wb') as f:
             pickle.dump((self.multilabel_binarizer), f, protocol=pickle.HIGHEST_PROTOCOL)
