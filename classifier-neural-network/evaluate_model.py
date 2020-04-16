@@ -5,7 +5,7 @@ import pickle
 from keras.preprocessing.sequence import pad_sequences
 import numpy as np
 
-maxlen = 100
+maxlen = 700
 def obtain_classes(proba, multilabel_binarizer):
     idxs = np.argsort(proba)[::-1][:10]
     # loop over the indexes of the high confidence class labels

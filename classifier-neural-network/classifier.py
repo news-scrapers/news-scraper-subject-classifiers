@@ -26,7 +26,7 @@ class Classifier:
             self.tokenizer = pickle.load(handle)
         self.multilabel_binarizer = MultiLabelBinarizer()
         self.model = None
-        self.maxlen = 100
+        self.maxlen = 700
 
 
     def create_tags_and_multilabel_biniarizer(self, df):
@@ -70,8 +70,8 @@ class Classifier:
 
         self.model = Sequential()
         self.model.add(Embedding(vocab_size, 20, input_length=self.maxlen))
-        self.model.add(Dense(40, activation="relu"))
-        self.model.add(Dense(40, activation="relu"))
+        self.model.add(Dense(60, activation="relu"))
+        self.model.add(Dense(60, activation="relu"))
         self.model.add(Flatten())
         self.model.add(Dense(output_size, activation="relu"))
         self.model.add(Activation('softmax'))
