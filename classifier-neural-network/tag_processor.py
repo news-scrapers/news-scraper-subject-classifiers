@@ -13,6 +13,7 @@ class TagProcessor:
     def __init__(self):
         self.df = None
         self.repetitions_threads_hole=50
+        self.blacklist = ["videojuegos"]
         self.main_tags = []
     
 
@@ -25,10 +26,11 @@ class TagProcessor:
         count = 0 
         for tags in list_of_cols:
             for tag in tags:
-                if tag in self.gruped_tags:
-                    self.gruped_tags[tag] = self.gruped_tags[tag] + 1
-                else:
-                    self.gruped_tags[tag] = 1
+                if tag not in self.blacklist:
+                    if tag in self.gruped_tags:
+                        self.gruped_tags[tag] = self.gruped_tags[tag] + 1
+                    else:
+                        self.gruped_tags[tag] = 1
             count = count + 1
             print("\r", count, self.total)
         return self.gruped_tags
