@@ -12,7 +12,7 @@ import pickle
 class TagProcessor:
     def __init__(self):
         self.df = None
-        self.repetitions_threads_hole=50
+        self.repetitions_threads_hole=20
         self.blacklist = ["videojuegos"]
         self.main_tags = []
     

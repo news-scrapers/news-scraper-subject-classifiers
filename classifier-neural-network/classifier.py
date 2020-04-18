@@ -54,11 +54,13 @@ class Classifier:
         print("creating model")
         filter_length = 300
 
-        #model = Sequential()
-        #model.add(Embedding(vocab_size, 20, input_length=maxlen))
-        #model.add(Dropout(0.15))
-        #model.add(GlobalMaxPool1D())
-        #model.add(Dense(output_size, activation='sigmoid'))
+        self.model = Sequential()
+        self.model.add(Embedding(vocab_size, 20, input_length=self.maxlen))
+        self.model.add(Dropout(0.15))
+        self.model.add(Conv1D(filter_length, 5, activation='relu'))
+        self.model.add(Conv1D(filter_length, 5, activation='relu'))
+        self.model.add(GlobalMaxPool1D())
+        self.model.add(Dense(output_size, activation='softmax'))
         
         #self.model = Sequential()
         #self.model.add(Embedding(vocab_size, 20, input_length=self.maxlen))
@@ -72,14 +74,14 @@ class Classifier:
         #self.model.add(Dense(output_size, activation="relu"))
         #self.model.add(Activation('softmax'))
 
-        self.model = Sequential()
-        self.model.add(Embedding(vocab_size, output_dim=50, input_length=self.maxlen))
-        self.model.add(LSTM(128, return_sequences=True))  
-        self.model.add(Dropout(0.5))
-        self.model.add(LSTM(64))
-        self.model.add(Dropout(0.5))
-        self.model.add(Dense(output_size, activation="relu"))
-        self.model.add(Activation('sigmoid')) 
+        #self.model = Sequential()
+        #self.model.add(Embedding(vocab_size, output_dim=50, input_length=self.maxlen))
+        #self.model.add(LSTM(128, return_sequences=True))  
+        #self.model.add(Dropout(0.5))
+        #self.model.add(LSTM(64))
+        #self.model.add(Dropout(0.5))
+        #self.model.add(Dense(output_size, activation="relu"))
+        #self.model.add(Activation('sigmoid')) 
 
         #self.model = Sequential()
         #self.model.add(Embedding(vocab_size, 20, input_length=self.maxlen))
@@ -102,7 +104,7 @@ class Classifier:
 
     def save_weights(self):
         # serialize weights to HDF5
-        self.model.save_weights("../data/neural_network_config/model_new.h5")
+        self.model.save_weights("../data/neural_network_config/model.h5")
         print("Saved model to disk")
 
     def create_and_train_model(self):
