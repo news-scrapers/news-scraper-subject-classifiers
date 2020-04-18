@@ -4,7 +4,7 @@
 from sklearn.preprocessing import MultiLabelBinarizer
 from keras.preprocessing.text import Tokenizer
 from keras.models import Sequential
-from keras.layers import Dense, Activation, Input, Embedding, Flatten, GlobalMaxPool1D, Dropout, Conv1D
+from keras.layers import Dense, Activation, Input, Embedding, Flatten,MaxPooling1D, GlobalMaxPool1D, Dropout, Conv1D
 from keras.callbacks import ReduceLROnPlateau, EarlyStopping, ModelCheckpoint
 
 from keras.optimizers import Adam
@@ -59,25 +59,29 @@ class Classifier:
         #model.add(Dropout(0.15))
         #model.add(GlobalMaxPool1D())
         #model.add(Dense(output_size, activation='sigmoid'))
+        
+        self.model = Sequential()
+        self.model.add(Embedding(vocab_size, 20, input_length=self.maxlen))
+        self.model.add(Dropout(0.1))
+        self.model.add(Conv1D(filter_length, 5, activation='relu'))
+        self.model.add(Conv1D(filter_length, 5, activation='relu'))
+        self.model.add(MaxPooling1D(5))
+        self.model.add(Conv1D(filter_length, 5, activation='relu'))
+        self.model.add(Conv1D(filter_length, 5, activation='relu'))
+        self.model.add(GlobalMaxPool1D())
+        self.model.add(Dense(output_size, activation="relu"))
+        self.model.add(Activation('softmax'))   
 
         #self.model = Sequential()
         #self.model.add(Embedding(vocab_size, 20, input_length=self.maxlen))
-        #self.model.add(Dropout(0.1))
-        #self.model.add(Conv1D(filter_length, 3, padding='valid', activation='relu', strides=1))
-        #self.model.add(GlobalMaxPool1D())
-        #self.model.add(Dense(output_size))
-        #self.model.add(Activation('sigmoid'))
-
-        self.model = Sequential()
-        self.model.add(Embedding(vocab_size, 20, input_length=self.maxlen))
-        self.model.add(Dense(60, activation="relu"))
-        self.model.add(Dense(60, activation="relu"))
-        self.model.add(Flatten())
-        self.model.add(Dense(output_size, activation="relu"))
-        self.model.add(Activation('softmax'))
+        #self.model.add(Dense(60, activation="relu"))
+        #self.model.add(Dense(60, activation="relu"))
+        #self.model.add(Flatten())
+        #self.model.add(Dense(output_size, activation="relu"))
+        #self.model.add(Activation('softmax'))
         # create model
 
-        self.model.compile(optimizer="adam", loss='binary_crossentropy', metrics=['accuracy'])
+        self.model.compile(optimizer="rmsprop", loss='binary_crossentropy', metrics=['accuracy'])
 
 
     def save_model_structure(self):
