@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "d7b052cc1ee9700a1b6977f702f2a8c825b8816826f01aa82624674041e804f9"
+            "sha256": "37d2af15bba78eacfaeb9713e94f6f9c38b327946c6f4060144c0054069be6d6"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -198,6 +198,14 @@
             ],
             "index": "pypi",
             "version": "==2.4.3"
+        },
+        "keras-metrics": {
+            "hashes": [
+                "sha256:07504def2a674b46e8907c2117ac12c7815c212889c5b31f8c015f7440d279dc",
+                "sha256:e65b8ace5f4d2100452d3109ef755870f1cfc00d13cb6d8eb96084aee2f5efa2"
+            ],
+            "index": "pypi",
+            "version": "==1.1.0"
         },
         "keras-preprocessing": {
             "hashes": [
@@ -750,11 +758,11 @@
         },
         "attrs": {
             "hashes": [
-                "sha256:26b54ddbbb9ee1d34d5d3668dd37d6cf74990ab23c828c2888dccdceee395594",
-                "sha256:fce7fc47dfc976152e82d53ff92fa0407700c21acd20886a13777a0d20e655dc"
+                "sha256:31b2eced602aa8423c2aea9c76a724617ed67cf9513173fd3a4f03e3a929c7e6",
+                "sha256:832aa3cde19744e49938b91fea06d69ecb9e649c93ba974535d08ad92164f700"
             ],
             "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
-            "version": "==20.2.0"
+            "version": "==20.3.0"
         },
         "backcall": {
             "hashes": [

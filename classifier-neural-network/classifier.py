@@ -16,6 +16,7 @@ import glob
 import re
 import numpy as np
 import pickle
+import keras_metrics
 
 
 
@@ -92,7 +93,8 @@ class Classifier:
         #self.model.add(Activation('softmax'))
         # create model
 
-        self.model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+        self.model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy', keras_metrics.precision(), keras_metrics.recall()])
+
 
 
     def save_model_structure(self):

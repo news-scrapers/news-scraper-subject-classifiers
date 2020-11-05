@@ -18,6 +18,7 @@ numpy = "*"
 tensorflow-cpu = "*"
 sentimentspanish = "*"
 tensorflow = "*"
+keras-metrics = "*"
 
 [requires]
 python_version = "3.7"
