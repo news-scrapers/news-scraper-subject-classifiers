@@ -5,7 +5,7 @@ from sklearn.preprocessing import MultiLabelBinarizer
 from keras.preprocessing.text import Tokenizer
 from keras.models import Sequential
 from keras.layers import Dense, Activation, Input, Embedding,LSTM, Flatten, MaxPooling1D, GlobalMaxPool1D, Dropout, Conv1D
-from keras.callbacks import ReduceLROnPlateau, EarlyStopping, ModelCheckpoint
+from keras.callbacks import ReduceLROnPlateau, EarlyStopping, ModelCheckpoint, CSVLogger
 
 from keras.optimizers import Adam
 from sklearn.model_selection import train_test_split
@@ -121,11 +121,13 @@ class Classifier:
 
         self.create_model(vocab_size, output_size)
         self.save_model_structure()
+        csv_logger = CSVLogger('log_loss.csv', append=False, separator=';')
 
         callbacks = [
         ReduceLROnPlateau(),
         EarlyStopping(patience=4),
-        ModelCheckpoint(filepath='../data/neural_network_config/temp-model-new.h5', save_best_only=True)]
+        ModelCheckpoint(filepath='../data/neural_network_config/temp-model-new.h5', save_best_only=True),
+        csv_logger]
 
         history = self.model.fit(X_train, y_train,
                             epochs=40,

@@ -15,9 +15,9 @@ keras = "*"
 sklearn = "*"
 pandas = "*"
 numpy = "*"
-tensorflow = "*"
 tensorflow-cpu = "*"
 sentimentspanish = "*"
+tensorflow = "*"
 
 [requires]
 python_version = "3.7"
