@@ -44,6 +44,7 @@ class Classifier:
         sentences_train, sentences_test, y_train, y_test = train_test_split(
         sentences, y, test_size=0.25, random_state=1000)
 
+
         X_train = self.tokenizer.texts_to_sequences(sentences_train)
         X_test = self.tokenizer.texts_to_sequences(sentences_test)
 
@@ -115,6 +116,8 @@ class Classifier:
 
         y = self.create_tags_and_multilabel_biniarizer(df)
         sentences = df['content'].values
+        print("shape of the data")
+        print(sentences.shape)
 
         X_train, X_test, y_train, y_test = self.create_train_and_test_data(sentences, y)
 
